@@ -1,0 +1,47 @@
+[
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadness.Build.cs",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadness.cpp",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadness.h",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadnessGameMode.cpp",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadnessGameMode.h",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadnessPawn.cpp",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadnessPawn.h",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadnessProjectile.cpp",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	},
+	{
+		"file": "C:\\\\Users\\\\Tondo\\\\Documents\\\\Unreal Engine\\\\DroneMadness\\\\Source\\\\DroneMadness\\\\DroneMadnessProjectile.h",
+		"command": "cl.exe @\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness\\DroneMadness.182.rsp\"",
+		"directory": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Source"
+	}
+]

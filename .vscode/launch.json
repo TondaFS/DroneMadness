@@ -1,0 +1,128 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "DroneMadness (Debug)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadness Win64 Debug Build",
+			"program": "C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\Binaries\\Win64\\UE4-Win64-Debug.exe",
+			"args": [
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "DroneMadness (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadness Win64 DebugGame Build",
+			"program": "C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\Binaries\\Win64\\UE4-Win64-DebugGame.exe",
+			"args": [
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "DroneMadness (Development)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadness Win64 Development Build",
+			"program": "C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\Binaries\\Win64\\UE4.exe",
+			"args": [
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "DroneMadness (Shipping)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadness Win64 Shipping Build",
+			"program": "C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\Binaries\\Win64\\UE4-Win64-Shipping.exe",
+			"args": [
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "DroneMadness (Test)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadness Win64 Test Build",
+			"program": "C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\Binaries\\Win64\\UE4-Win64-Test.exe",
+			"args": [
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "DroneMadnessEditor (Debug)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadnessEditor Win64 Debug Build",
+			"program": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Binaries\\Win64\\UE4Editor-Win64-Debug.exe",
+			"args": [
+				"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\DroneMadness.uproject"
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "DroneMadnessEditor (DebugGame)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadnessEditor Win64 DebugGame Build",
+			"program": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Binaries\\Win64\\UE4Editor-Win64-DebugGame.exe",
+			"args": [
+				"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\DroneMadness.uproject"
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "DroneMadnessEditor (Development)",
+			"request": "launch",
+			"preLaunchTask": "DroneMadnessEditor Win64 Development Build",
+			"program": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Binaries\\Win64\\UE4Editor.exe",
+			"args": [
+				"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\DroneMadness.uproject"
+			],
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26",
+			"stopAtEntry": false,
+			"externalConsole": true,
+			"type": "cppvsdbg",
+			"visualizerFile": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Extras\\VisualStudioDebugging\\UE4.natvis"
+		},
+		{
+			"name": "Generate Project Files",
+			"type": "clr",
+			"request": "launch",
+			"program": "C:\\Hry\\Epic Games\\UE_4.26\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe",
+			"console": "externalTerminal",
+			"args": [
+				"-projectfiles",
+				"-vscode",
+				"-project=\"C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\DroneMadness.uproject\"",
+				"-game",
+				"-engine"
+			],
+			"internalConsoleOptions": "openOnSessionStart",
+			"cwd": "C:\\Hry\\Epic Games\\UE_4.26"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "DroneMadnessEditor Editor Win64 Development (DroneMadness)",
+            "intelliSenseMode": "msvc-x64",
+            "compileCommands": "C:\\Users\\Tondo\\Documents\\Unreal Engine\\DroneMadness\\.vscode\\compileCommands_DroneMadness.json",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
