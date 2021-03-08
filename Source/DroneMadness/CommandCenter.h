@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "DroneType.h"
+#include "Drone.h"
 #include "CommandCenter.generated.h"
 
 UCLASS()
@@ -33,12 +33,28 @@ public:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Spawn")
 		float SpawnRate;
 
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Spawn")
+	TSubclassOf<ADrone> DroneBlueprint;
+		
+private:
+	UPROPERTY(VisibleAnywhere, Category = "Drones")
+	TArray<ADrone*> DronesInControl;	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void NotifyActorBeginOverlap(AActor* Other) override;
+	virtual void NotifyActorEndOverlap(AActor* Other) override;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void RegisterDrone(ADrone* Drone);
+	void UnregisterDrone(ADrone* Drone);
+
+private:
+	void SpawnDrones(EDroneType Type, int32 Count);
+	void GiveOrders();
 
 };

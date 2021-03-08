@@ -2,6 +2,8 @@
 
 
 #include "CommandCenter.h"
+#include "Drone.h"
+#include "OrderGeneration.h"
 
 // Sets default values
 ACommandCenter::ACommandCenter()
@@ -15,13 +17,82 @@ ACommandCenter::ACommandCenter()
 void ACommandCenter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	SpawnDrones(DroneTypeToSpawn, NumberOfSpawnedDrones);
+}
+
+void ACommandCenter::NotifyActorBeginOverlap(AActor* Other)
+{
+	if (ADrone* Drone = Cast<ADrone>(Other)) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Drone entered trigger"));
+		RegisterDrone(Drone);
+	}
+}
+
+void ACommandCenter::NotifyActorEndOverlap(AActor* Other)
+{
+	if (ADrone* Drone = Cast<ADrone>(Other))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Drone exited trigger"));
+		UnregisterDrone(Drone);
+	}
 }
 
 // Called every frame
 void ACommandCenter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
+void ACommandCenter::RegisterDrone(ADrone* Drone)
+{
+	//Don't register drone we already have registered
+	if (DronesInControl.Find(Drone) != INDEX_NONE)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Already have registered drone"));
+		return;
+	}		
+	
+	Drone->UnregisterFromCurrentCommandCenter();
+	DronesInControl.Add(Drone);
+	Drone->SetCommandCenter(this);
+	UE_LOG(LogTemp, Warning, TEXT("Drone registered"));
+}
+
+void ACommandCenter::UnregisterDrone(ADrone* Drone)
+{
+	int32 DroneIndex = DronesInControl.Find(Drone);
+
+	//we don't have this drone registered
+	if (DroneIndex == INDEX_NONE)
+		return;
+
+	Drone->SetCommandCenter(nullptr);
+	DronesInControl.RemoveAtSwap(DroneIndex);
+	UE_LOG(LogTemp, Warning, TEXT("Drone un-registered"));
+}
+
+void ACommandCenter::SpawnDrones(EDroneType Type, int32 Count)
+{
+	for (int i = 0; i < Count; i++)
+	{
+		FActorSpawnParameters SpawnParams;
+		ADrone* NewDrone = GetWorld()->SpawnActor<ADrone>(DroneBlueprint, GetTransform(), SpawnParams);
+		NewDrone->DroneType = Type;
+		
+		FDroneOrder NewOrder = FOrderGeneration::GenerateOrder(MinDistance, MaxDistance);
+		NewDrone->Init(DroneTypeToSpawn, NewOrder);
+		RegisterDrone(NewDrone);
+	}
+}
+
+void ACommandCenter::GiveOrders()
+{
+	for (int i = 0; i < DronesInControl.Num(); i++)
+	{
+		ADrone* Drone = DronesInControl[i];
+		FDroneOrder NewOrder = FOrderGeneration::GenerateOrder(MinDistance, MaxDistance);
+		Drone->SetNewOrder(NewOrder);
+	}
 }
 

@@ -2,6 +2,7 @@
 
 #include "Drone.h"
 #include "DroneType.h"
+#include "CommandCenter.h"
 #include "OrderGeneration.h"
 
 // Sets default values
@@ -18,6 +19,13 @@ void ADrone::BeginPlay()
 	Super::BeginPlay();	
 
 	GenerateNewOrder();
+}
+
+void ADrone::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Drone is about to be destoryed"));
+	if (CurrentCommandCenter != nullptr)
+		CurrentCommandCenter->UnregisterDrone(this);
 }
 
 // Called every frame
@@ -86,5 +94,29 @@ void ADrone::OnHit()
 			//SetNewOrder(FDroneOrder(FVector::ZeroVector, 0));
 		}
 	}	
+}
+
+void ADrone::Init(EDroneType Type, FDroneOrder Order)
+{
+	IsHit = false;
+	DroneType = Type;	
+	SetNewOrder(Order);
+	UE_LOG(LogTemp, Warning, TEXT("Drone init done"));
+}
+
+void ADrone::UnregisterFromCurrentCommandCenter()
+{
+	//unregister from previous command center
+	if (CurrentCommandCenter != nullptr)
+	{
+		CurrentCommandCenter->UnregisterDrone(this);
+	}
+}
+
+void ADrone::SetCommandCenter(ACommandCenter* CommandCenter)
+{
+	CurrentCommandCenter = CommandCenter;
+	
+	//play particle here
 }
 
