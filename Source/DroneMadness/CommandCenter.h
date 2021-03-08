@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "DroneType.h"
 #include "Drone.h"
+#include <Runtime/Engine/Classes/Components/SphereComponent.h>
 #include "CommandCenter.generated.h"
+
 
 UCLASS()
 class DRONEMADNESS_API ACommandCenter : public AActor
@@ -38,7 +40,9 @@ public:
 		
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Drones")
-	TArray<ADrone*> DronesInControl;	
+	TArray<ADrone*> DronesInControl;
+
+	USphereComponent* TriggerComponent;
 
 protected:
 	// Called when the game starts or when spawned
@@ -46,6 +50,10 @@ protected:
 
 	virtual void NotifyActorBeginOverlap(AActor* Other) override;
 	virtual void NotifyActorEndOverlap(AActor* Other) override;
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& e) override;
+#endif
 
 public:	
 	// Called every frame

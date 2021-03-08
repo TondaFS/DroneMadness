@@ -3,6 +3,7 @@
 
 #include "CommandCenter.h"
 #include "Drone.h"
+#include <Runtime/Engine/Classes/Components/SphereComponent.h>
 #include "OrderGeneration.h"
 
 // Sets default values
@@ -17,7 +18,11 @@ ACommandCenter::ACommandCenter()
 void ACommandCenter::BeginPlay()
 {
 	Super::BeginPlay();
+
 	SpawnDrones(DroneTypeToSpawn, NumberOfSpawnedDrones);
+
+	TriggerComponent = FindComponentByClass<USphereComponent>();
+	TriggerComponent->SetSphereRadius(ControlRange);
 }
 
 void ACommandCenter::NotifyActorBeginOverlap(AActor* Other)
@@ -95,4 +100,17 @@ void ACommandCenter::GiveOrders()
 		Drone->SetNewOrder(NewOrder);
 	}
 }
+
+#if WITH_EDITOR
+void ACommandCenter::PostEditChangeProperty(struct FPropertyChangedEvent& e)
+{
+	Super::PostEditChangeProperty(e);
+
+	FName PropertyName = (e.Property != NULL) ? e.Property->GetFName() : NAME_None;
+	if (PropertyName == GET_MEMBER_NAME_CHECKED(ACommandCenter, ControlRange)) {
+		TriggerComponent = FindComponentByClass<USphereComponent>();
+		TriggerComponent->SetSphereRadius(ControlRange);
+	}
+}
+#endif
 
