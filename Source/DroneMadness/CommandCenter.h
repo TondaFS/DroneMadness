@@ -44,6 +44,9 @@ private:
 
 	USphereComponent* TriggerComponent;
 
+	FTimerHandle SpawnHandle;
+	FTimerHandle OrdersHandle;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -62,7 +65,7 @@ public:
 	void UnregisterDrone(ADrone* Drone);
 
 private:
-	void SpawnDrones(EDroneType Type, int32 Count);
+	void SpawnDrones();
 	void GiveOrders();
 
 };

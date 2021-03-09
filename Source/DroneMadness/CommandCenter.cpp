@@ -19,10 +19,16 @@ void ACommandCenter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SpawnDrones(DroneTypeToSpawn, NumberOfSpawnedDrones);
-
 	TriggerComponent = FindComponentByClass<USphereComponent>();
 	TriggerComponent->SetSphereRadius(ControlRange);
+
+	/*
+	GetWorld()->GetTimerManager().ClearTimer(SpawnHandle);
+	GetWorld()->GetTimerManager().ClearTimer(OrdersHandle);
+	*/
+
+	GetWorld()->GetTimerManager().SetTimer(SpawnHandle, this, &ACommandCenter::SpawnDrones, SpawnRate, true, 1.5f);
+	GetWorld()->GetTimerManager().SetTimer(OrdersHandle, this, &ACommandCenter::GiveOrders, BroadcastRate, true);
 }
 
 void ACommandCenter::NotifyActorBeginOverlap(AActor* Other)
@@ -77,13 +83,12 @@ void ACommandCenter::UnregisterDrone(ADrone* Drone)
 	UE_LOG(LogTemp, Warning, TEXT("Drone un-registered"));
 }
 
-void ACommandCenter::SpawnDrones(EDroneType Type, int32 Count)
+void ACommandCenter::SpawnDrones()
 {
-	for (int i = 0; i < Count; i++)
+	for (int i = 0; i < NumberOfSpawnedDrones; i++)
 	{
 		FActorSpawnParameters SpawnParams;
 		ADrone* NewDrone = GetWorld()->SpawnActor<ADrone>(DroneBlueprint, GetTransform(), SpawnParams);
-		NewDrone->DroneType = Type;
 		
 		FDroneOrder NewOrder = FOrderGeneration::GenerateOrder(MinDistance, MaxDistance);
 		NewDrone->Init(DroneTypeToSpawn, NewOrder);

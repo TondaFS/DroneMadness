@@ -35,12 +35,19 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Drone")
 		ACommandCenter* CurrentCommandCenter;
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FNewCommandCenterRegistered, bool, CommandCenter);
+	UPROPERTY(BlueprintAssignable, Category = "Drone Events")
+		FNewCommandCenterRegistered OnNewCommandCenterRegistered;
+	//FNewCommandCenterRegistered& OnNewCommandCenterRegistered() { return NewCommandCenterRegistered; }
+
 private:
 	bool IsHit;
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
 	FVector MovementDestination;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float MovementCloseCheckDistance;
+		
+	//FNewCommandCenterRegistered NewCommandCenterRegistered;
 	
 
 protected:

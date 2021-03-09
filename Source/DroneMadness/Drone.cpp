@@ -4,6 +4,7 @@
 #include "DroneType.h"
 #include "CommandCenter.h"
 #include "OrderGeneration.h"
+#include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
 
 // Sets default values
 ADrone::ADrone()
@@ -17,8 +18,6 @@ ADrone::ADrone()
 void ADrone::BeginPlay()
 {
 	Super::BeginPlay();	
-
-	GenerateNewOrder();
 }
 
 void ADrone::EndPlay(EEndPlayReason::Type EndPlayReason)
@@ -35,22 +34,24 @@ void ADrone::Tick(float DeltaTime)
 		
 	if (IsHit)
 		return;
-
+		
 	//moves drone in the current direction
-	FVector currentLocation = this->GetActorLocation();
-	FVector movement = currentLocation + 
-		FVector(CurrentOrder.Direction * DeltaTime * Speed);
+	FVector CurrentLocation = this->GetActorLocation();
+	FVector TargetDirection = UKismetMathLibrary::GetDirectionUnitVector(CurrentLocation, MovementDestination);
+	FVector Movement = FVector(CurrentLocation + FVector(TargetDirection * DeltaTime * Speed));	
 
-	float CurrentDistance = FVector::Distance(movement, MovementDestination);
+	float CurrentDistance = FVector::Distance(Movement, MovementDestination);
 
 	if (CurrentDistance <= MovementCloseCheckDistance)
 	{
 		this->SetActorLocation(MovementDestination);
-		GenerateNewOrder();
+
+		if (CurrentCommandCenter == nullptr)
+			GenerateNewOrder();
 	}
 	else 
 	{
-		this->SetActorLocation(movement);
+		this->SetActorLocation(Movement);
 	}
 }
 
@@ -116,7 +117,6 @@ void ADrone::UnregisterFromCurrentCommandCenter()
 void ADrone::SetCommandCenter(ACommandCenter* CommandCenter)
 {
 	CurrentCommandCenter = CommandCenter;
-	
-	//play particle here
+	OnNewCommandCenterRegistered.Broadcast(CurrentCommandCenter != nullptr);
 }
 
