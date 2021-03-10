@@ -22,11 +22,6 @@ void ACommandCenter::BeginPlay()
 	TriggerComponent = FindComponentByClass<USphereComponent>();
 	TriggerComponent->SetSphereRadius(ControlRange);
 
-	/*
-	GetWorld()->GetTimerManager().ClearTimer(SpawnHandle);
-	GetWorld()->GetTimerManager().ClearTimer(OrdersHandle);
-	*/
-
 	GetWorld()->GetTimerManager().SetTimer(SpawnHandle, this, &ACommandCenter::SpawnDrones, SpawnRate, true, 1.5f);
 	GetWorld()->GetTimerManager().SetTimer(OrdersHandle, this, &ACommandCenter::GiveOrders, BroadcastRate, true);
 }
@@ -90,6 +85,10 @@ void ACommandCenter::SpawnDrones()
 		FActorSpawnParameters SpawnParams;
 		ADrone* NewDrone = GetWorld()->SpawnActor<ADrone>(DroneBlueprint, GetTransform(), SpawnParams);
 		
+		FVector Position = NewDrone->GetTransform().GetLocation();
+		Position.Z = 215;
+		NewDrone->SetActorLocation(Position);
+
 		FDroneOrder NewOrder = FOrderGeneration::GenerateOrder(MinDistance, MaxDistance);
 		NewDrone->Init(DroneTypeToSpawn, NewOrder);
 		RegisterDrone(NewDrone);

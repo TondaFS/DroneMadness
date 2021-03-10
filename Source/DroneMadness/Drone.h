@@ -23,6 +23,8 @@ public:
 		TEnumAsByte<EDroneType> DroneType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float Speed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		float CurrentSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drone")
 	FDroneOrder CurrentOrder;

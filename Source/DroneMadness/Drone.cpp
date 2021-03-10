@@ -18,6 +18,7 @@ ADrone::ADrone()
 void ADrone::BeginPlay()
 {
 	Super::BeginPlay();	
+	CurrentSpeed = 0;
 }
 
 void ADrone::EndPlay(EEndPlayReason::Type EndPlayReason)
@@ -38,20 +39,37 @@ void ADrone::Tick(float DeltaTime)
 	//moves drone in the current direction
 	FVector CurrentLocation = this->GetActorLocation();
 	FVector TargetDirection = UKismetMathLibrary::GetDirectionUnitVector(CurrentLocation, MovementDestination);
-	FVector Movement = FVector(CurrentLocation + FVector(TargetDirection * DeltaTime * Speed));	
+	FVector Movement = FVector(CurrentLocation + FVector(TargetDirection * DeltaTime * CurrentSpeed));	
 
 	float CurrentDistance = FVector::Distance(Movement, MovementDestination);
 
 	if (CurrentDistance <= MovementCloseCheckDistance)
 	{
 		this->SetActorLocation(MovementDestination);
-
+		CurrentSpeed = 0;
 		if (CurrentCommandCenter == nullptr)
 			GenerateNewOrder();
 	}
-	else 
+	else
 	{
 		this->SetActorLocation(Movement);
+
+		if (CurrentDistance <= (Speed / 2))
+		{
+			CurrentSpeed -= DeltaTime * Speed;
+		}
+		else 
+		{
+			if (CurrentSpeed < Speed)
+			{
+				CurrentSpeed += DeltaTime * Speed;
+			}
+			else
+			{
+				CurrentSpeed = Speed;
+			}
+		}
+		
 	}
 }
 
