@@ -11,6 +11,10 @@
 class ACommandCenter;
 
 UCLASS()
+/// <summary>
+/// Class representing Drone actor on the map.
+/// Drone has a type and speed and moves to the destination of its current order.
+/// </summary>
 class DRONEMADNESS_API ADrone : public AActor
 {
 	GENERATED_BODY()
@@ -18,7 +22,6 @@ class DRONEMADNESS_API ADrone : public AActor
 public:	
 	
 	ADrone();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drone")
 		TEnumAsByte<EDroneType> DroneType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
@@ -29,18 +32,42 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drone")
 	FDroneOrder CurrentOrder;
 
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Order Generation")
-		float MinDistance;
+	/// <summary>
+	/// Min distance to go for randomly generated order
+	/// </summary>
+	float MinDistance;	
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Order Generation")
-		float MaxDistance;
-		
+	/// <summary>
+	/// Max distance to go for randomly generated order
+	/// </summary>
+	float MaxDistance;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Drone")
-		ACommandCenter* CurrentCommandCenter;
+	ACommandCenter* CurrentCommandCenter;
 
+	/// <summary>
+	/// Delegate for event when drone registers to a new command center.
+	/// </summary>
+	/// <param name="">Event definition</param>
+	/// <param name="">bool determining if the commandCenter is null (false) or not (true)</param>
+	/// <param name=""></param>
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FNewCommandCenterRegistered, bool, CommandCenter);
+	/// <summary>
+	/// Event called when drone register to a new command center.
+	/// </summary>
 	UPROPERTY(BlueprintAssignable, Category = "Drone Events")
 		FNewCommandCenterRegistered OnNewCommandCenterRegistered;
-	//FNewCommandCenterRegistered& OnNewCommandCenterRegistered() { return NewCommandCenterRegistered; }
+
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDroneInitiated);
+	/// <summary>
+	/// Event called when drone initiates itself after spawning
+	/// </summary>
+	UPROPERTY(BlueprintAssignable, Category = "Drone Events")
+		FDroneInitiated OnDroneInitiated;
 
 private:
 	bool IsHit;
@@ -48,17 +75,13 @@ private:
 	FVector MovementDestination;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float MovementCloseCheckDistance;
-		
-	//FNewCommandCenterRegistered NewCommandCenterRegistered;
-	
-
+			
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
-
 	void SetNewOrder(FDroneOrder NewOrder);
 	void OnHit();
 	void Init(EDroneType Type, FDroneOrder Order);
@@ -67,4 +90,5 @@ public:
 
 private:
 	void GenerateNewOrder();
+	void MoveDrone(float DeltaTime);
 };

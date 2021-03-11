@@ -10,6 +10,11 @@
 
 
 UCLASS()
+/// <summary>
+/// Class representing CommandCenter on map.
+/// Command center spawns new drones with given type, registers and unregisters drones and gives orders to
+/// drones in range.
+/// </summary>
 class DRONEMADNESS_API ACommandCenter : public AActor
 {
 	GENERATED_BODY()
@@ -19,36 +24,48 @@ public:
 	ACommandCenter();
 		
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Command Center")
-		float ControlRange;
+	float ControlRange;
 
+	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Orders")
-		float BroadcastRate;
+	/// <summary>
+	/// How often the center gives orders.
+	/// </summary>
+	float BroadcastRate;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Orders")
-		float MinDistance;
+	/// <summary>
+	/// Min distance for order generation
+	/// </summary>
+	float MinDistance;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Orders")
-		float MaxDistance;
+	/// <summary>
+	/// Max distance for order genration
+	/// </summary>
+	float MaxDistance;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
-		TEnumAsByte<EDroneType> DroneTypeToSpawn;
+	TEnumAsByte<EDroneType> DroneTypeToSpawn;
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Spawn")
-		int32 NumberOfSpawnedDrones;
+	int32 NumberOfSpawnedDrones;
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Spawn")
-		float SpawnRate;
+	float SpawnRate;
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Spawn")
+	/// <summary>
+	/// Reference for DroneBlueprint to spawn
+	/// </summary>
 	TSubclassOf<ADrone> DroneBlueprint;
 		
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Drones")
 	TArray<ADrone*> DronesInControl;
-
 	USphereComponent* TriggerComponent;
 
+	//handles for timers to spawning and giving orders
 	FTimerHandle SpawnHandle;
 	FTimerHandle OrdersHandle;
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void NotifyActorBeginOverlap(AActor* Other) override;
@@ -59,8 +76,6 @@ protected:
 #endif
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 	void RegisterDrone(ADrone* Drone);
 	void UnregisterDrone(ADrone* Drone);
 

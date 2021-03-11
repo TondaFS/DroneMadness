@@ -19,37 +19,43 @@ void ACommandCenter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//get reference for sphere component
 	TriggerComponent = FindComponentByClass<USphereComponent>();
 	TriggerComponent->SetSphereRadius(ControlRange);
 
+	//set timers for spawning and broadcasting
 	GetWorld()->GetTimerManager().SetTimer(SpawnHandle, this, &ACommandCenter::SpawnDrones, SpawnRate, true, 1.5f);
 	GetWorld()->GetTimerManager().SetTimer(OrdersHandle, this, &ACommandCenter::GiveOrders, BroadcastRate, true);
 }
 
+/// <summary>
+/// When Drone enters trigger, register it to this command center
+/// </summary>
+/// <param name="Other"></param>
 void ACommandCenter::NotifyActorBeginOverlap(AActor* Other)
 {
 	if (ADrone* Drone = Cast<ADrone>(Other)) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Drone entered trigger"));
 		RegisterDrone(Drone);
 	}
 }
 
+/// <summary>
+/// When drone leaves trigger, unregister it from this command center
+/// </summary>
+/// <param name="Other"></param>
 void ACommandCenter::NotifyActorEndOverlap(AActor* Other)
 {
 	if (ADrone* Drone = Cast<ADrone>(Other))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Drone exited trigger"));
 		UnregisterDrone(Drone);
 	}
 }
 
-// Called every frame
-void ACommandCenter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
+/// <summary>
+/// Registers given drone to this command center. 
+/// </summary>
+/// <param name="Drone">Drone to register</param>
 void ACommandCenter::RegisterDrone(ADrone* Drone)
 {
 	//Don't register drone we already have registered
@@ -62,9 +68,12 @@ void ACommandCenter::RegisterDrone(ADrone* Drone)
 	Drone->UnregisterFromCurrentCommandCenter();
 	DronesInControl.Add(Drone);
 	Drone->SetCommandCenter(this);
-	UE_LOG(LogTemp, Warning, TEXT("Drone registered"));
 }
 
+/// <summary>
+/// Unregisters given drone from this command center.
+/// </summary>
+/// <param name="Drone">Drone to unregister</param>
 void ACommandCenter::UnregisterDrone(ADrone* Drone)
 {
 	int32 DroneIndex = DronesInControl.Find(Drone);
@@ -75,26 +84,34 @@ void ACommandCenter::UnregisterDrone(ADrone* Drone)
 
 	Drone->SetCommandCenter(nullptr);
 	DronesInControl.RemoveAtSwap(DroneIndex);
-	UE_LOG(LogTemp, Warning, TEXT("Drone un-registered"));
 }
 
+/// <summary>
+/// Spawns drones in the postion of the command center and generates a random order for it.
+/// </summary>
 void ACommandCenter::SpawnDrones()
 {
 	for (int i = 0; i < NumberOfSpawnedDrones; i++)
 	{
+		//spawn drone
 		FActorSpawnParameters SpawnParams;
 		ADrone* NewDrone = GetWorld()->SpawnActor<ADrone>(DroneBlueprint, GetTransform(), SpawnParams);
 		
+		//set it's position
 		FVector Position = NewDrone->GetTransform().GetLocation();
 		Position.Z = 215;
 		NewDrone->SetActorLocation(Position);
 
+		//generate random order and give it to a drone
 		FDroneOrder NewOrder = FOrderGeneration::GenerateOrder(MinDistance, MaxDistance);
 		NewDrone->Init(DroneTypeToSpawn, NewOrder);
 		RegisterDrone(NewDrone);
 	}
 }
 
+/// <summary>
+/// Generates random order for each drone in range
+/// </summary>
 void ACommandCenter::GiveOrders()
 {
 	for (int i = 0; i < DronesInControl.Num(); i++)
@@ -106,6 +123,10 @@ void ACommandCenter::GiveOrders()
 }
 
 #if WITH_EDITOR
+/// <summary>
+/// Updates trigger range when the ControlRange parameter is updated in Details of the Command Center in editor
+/// </summary>
+/// <param name="e"></param>
 void ACommandCenter::PostEditChangeProperty(struct FPropertyChangedEvent& e)
 {
 	Super::PostEditChangeProperty(e);

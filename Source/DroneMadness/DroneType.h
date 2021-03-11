@@ -1,10 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
-
 #include "DroneType.generated.h"
 
 UENUM(BlueprintType)
+/// <summary>
+/// Type of the Drone
+/// </summary>
 enum EDroneType
 {
 	DT_Light		UMETA(DisplayName = "Light"),
