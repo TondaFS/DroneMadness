@@ -36,9 +36,18 @@ void ADrone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 		
-	if (IsHit)
+	if (IsHit) 
+	{
+		if (CurrentSpeed > 0) 
+		{
+			CurrentSpeed -= DeltaTime * Speed;
+			if (CurrentSpeed < 0)
+				CurrentSpeed = 0;
+		}
+
 		return;
-		
+	}
+				
 	MoveDrone(DeltaTime);
 }
 
